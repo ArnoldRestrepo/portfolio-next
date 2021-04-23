@@ -1,6 +1,11 @@
-import Head from 'next/head';
+import Container from '../components/container';
+import MoreStories from '../components/more-stories';
+import HeroPost from '../components/hero-post';
+import Intro from '../components/intro';
 import Layout from '../components/layout';
 import { getAllPosts } from '../lib/api';
+import Head from 'next/head';
+import Link from 'next/link';
 import { CMS_NAME } from '../lib/constants';
 import Post from '../types/post';
 
@@ -8,22 +13,37 @@ type Props = {
   allPosts: Post[];
 };
 
-const Blog = ({ allPosts }: Props) => {
-  console.info('Blog Posts', allPosts);
-  const heroPost: Object = allPosts[0];
-  const morePost: Object = allPosts.slice(1);
+const Index = ({ allPosts }: Props) => {
+  const heroPost = allPosts[0];
+  const morePosts = allPosts.slice(1);
 
   return (
-    <Layout>
-      <Head>
-        <title>Blog de {CMS_NAME}</title>
-      </Head>
-      <p>I am a Blog </p>
-    </Layout>
+    <>
+      <Layout>
+        <Head>
+          <title>Next.js Blog Example with {CMS_NAME}</title>
+        </Head>
+        <Container>
+          <Intro />
+          <Link href='/blog'>Blog</Link>
+          {heroPost && (
+            <HeroPost
+              title={heroPost.title}
+              coverImage={heroPost.coverImage}
+              date={heroPost.date}
+              author={heroPost.author}
+              slug={heroPost.slug}
+              excerpt={heroPost.excerpt}
+            />
+          )}
+          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        </Container>
+      </Layout>
+    </>
   );
 };
 
-export default Blog;
+export default Index;
 
 export const getStaticProps = async () => {
   const allPosts = getAllPosts([
@@ -34,6 +54,7 @@ export const getStaticProps = async () => {
     'coverImage',
     'excerpt',
   ]);
+
   return {
     props: { allPosts },
   };
