@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { CMS_NAME } from '../lib/constants'
 
 const Intro = () => {
@@ -16,6 +17,7 @@ const Intro = () => {
         </a>{' '}
         and {CMS_NAME}.
       </h4>
+      <Link href="/">Go to Home</Link>
     </section>
   )
 }

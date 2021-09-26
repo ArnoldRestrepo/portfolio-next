@@ -9,9 +9,9 @@ import { CMS_NAME } from '../lib/constants';
 const Index: FC = () => {
   return (
     <>
-      <Layout>
+      <Layout preview={false}>
         <Head>
-          <title>Next.js Blog Example with {CMS_NAME}</title>
+          <title>{CMS_NAME}</title>
         </Head>
         <Container>
           <h2>Bienvenido a arnoldrestrepo.com</h2>
